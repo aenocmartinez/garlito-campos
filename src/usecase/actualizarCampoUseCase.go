@@ -6,7 +6,7 @@ import (
 
 type ActualizarCampoUseCase struct{}
 
-func (uc *ActualizarCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.EesponseHttp) {
+func (uc *ActualizarCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.ResponseHttp) {
 	campo := campoRepository.BuscarCampoPorId(campoDto.Id)
 	if !campo.Existe() {
 		resp.Code = "404"
@@ -17,8 +17,8 @@ func (uc *ActualizarCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.Eespo
 	campo.SetRepository(campoRepository)
 	campo.SetNombre(campoDto.Nombre)
 	campo.SetDescripcion(campoDto.Descripcion)
-	exito := campo.Actualizar()
-	if !exito {
+	err := campo.Actualizar()
+	if err != nil {
 		resp.Code = "500"
 		resp.Message = "error server internal"
 		return resp

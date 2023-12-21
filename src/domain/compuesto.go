@@ -80,15 +80,15 @@ func (c *Compuesto) SubcamposDto() []dto.CampoDto {
 	return subcampos
 }
 
-func (c *Compuesto) Crear() bool {
+func (c *Compuesto) Crear() error {
 	return c.repository.CrearCampo(c)
 }
 
-func (c *Compuesto) Eliminar() bool {
+func (c *Compuesto) Eliminar() error {
 	return c.repository.EliminarCampo(c.id)
 }
 
-func (c *Compuesto) Actualizar() bool {
+func (c *Compuesto) Actualizar() error {
 	return c.repository.ActualizarCampo(c)
 }
 

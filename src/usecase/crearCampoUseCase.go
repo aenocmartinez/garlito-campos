@@ -4,7 +4,7 @@ import "garlito/src/view/dto"
 
 type CrearCampoUseCase struct{}
 
-func (uc *CrearCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.EesponseHttp) {
+func (uc *CrearCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.ResponseHttp) {
 
 	campo := campoRepository.BuscarCampoPorNombre(campoDto.Nombre)
 	if campo.Existe() {
@@ -17,8 +17,8 @@ func (uc *CrearCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.EesponseHt
 	campo.SetNombre(campoDto.Nombre)
 	campo.SetDescripcion(campoDto.Descripcion)
 
-	result := campo.Crear()
-	if !result {
+	err := campo.Crear()
+	if err != nil {
 		resp.Code = "500"
 		resp.Message = "error internal"
 		return resp

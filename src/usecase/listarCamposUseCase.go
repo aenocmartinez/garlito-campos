@@ -4,7 +4,7 @@ import "garlito/src/view/dto"
 
 type ListarCamposUseCase struct{}
 
-func (uc *ListarCamposUseCase) Execute() (resp dto.EesponseHttp) {
+func (uc *ListarCamposUseCase) Execute() (resp dto.ResponseHttp) {
 
 	resp.Code = "200"
 	resp.Data = campoRepository.ListarCampos()

@@ -7,7 +7,7 @@ import (
 
 type BuscarCampoPorIdUseCase struct{}
 
-func (uc *BuscarCampoPorIdUseCase) Execute(id int64) (resp dto.EesponseHttp) {
+func (uc *BuscarCampoPorIdUseCase) Execute(id int64) (resp dto.ResponseHttp) {
 	campo := campoRepository.BuscarCampoPorId(id)
 	if !campo.Existe() {
 		resp.Code = "404"

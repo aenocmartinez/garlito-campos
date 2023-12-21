@@ -8,9 +8,9 @@ type Campo interface {
 	SetDescripcion(descripcion string)
 	Descripcion() string
 	EsCompuesto() bool
-	Crear() bool
-	Eliminar() bool
-	Actualizar() bool
+	Crear() error
+	Eliminar() error
+	Actualizar() error
 	Existe() bool
 	SetRepository(repository CampoRepository)
 }

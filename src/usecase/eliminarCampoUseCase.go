@@ -4,7 +4,7 @@ import "garlito/src/view/dto"
 
 type EliminarCampoUseCase struct{}
 
-func (uc *EliminarCampoUseCase) Execute(id int64) (resp dto.EesponseHttp) {
+func (uc *EliminarCampoUseCase) Execute(id int64) (resp dto.ResponseHttp) {
 
 	campo := campoRepository.BuscarCampoPorId(id)
 	if !campo.Existe() {
@@ -14,8 +14,8 @@ func (uc *EliminarCampoUseCase) Execute(id int64) (resp dto.EesponseHttp) {
 	}
 
 	campo.SetRepository(campoRepository)
-	exito := campo.Eliminar()
-	if !exito {
+	err := campo.Eliminar()
+	if err != nil {
 		resp.Code = "500"
 		resp.Message = "error server internal"
 		return resp

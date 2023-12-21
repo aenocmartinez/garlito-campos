@@ -43,15 +43,15 @@ func (s *Simple) EsCompuesto() bool {
 	return false
 }
 
-func (s *Simple) Crear() bool {
+func (s *Simple) Crear() error {
 	return s.repository.CrearCampo(s)
 }
 
-func (s *Simple) Eliminar() bool {
+func (s *Simple) Eliminar() error {
 	return s.repository.EliminarCampo(s.id)
 }
 
-func (s *Simple) Actualizar() bool {
+func (s *Simple) Actualizar() error {
 	return s.repository.ActualizarCampo(s)
 }
 

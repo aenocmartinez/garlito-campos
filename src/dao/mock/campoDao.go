@@ -45,7 +45,7 @@ func loaderData() (data []domain.Simple) {
 	return data
 }
 
-func (c *CampoDao) CrearCampo(campo domain.Campo) bool {
+func (c *CampoDao) CrearCampo(campo domain.Campo) (err error) {
 	id := len(c.data) + 1
 
 	simple, _ := campo.(*domain.Simple)
@@ -54,10 +54,11 @@ func (c *CampoDao) CrearCampo(campo domain.Campo) bool {
 	simple.SetDescripcion(campo.Descripcion())
 
 	c.data = append(c.data, *simple)
-	return true
+
+	return err
 }
 
-func (c *CampoDao) EliminarCampo(id int64) bool {
+func (c *CampoDao) EliminarCampo(id int64) (err error) {
 	data := []domain.Simple{}
 	for _, item := range c.data {
 		if item.Id() == id {
@@ -67,10 +68,11 @@ func (c *CampoDao) EliminarCampo(id int64) bool {
 	}
 
 	c.data = data
-	return true
+
+	return err
 }
 
-func (c *CampoDao) ActualizarCampo(campo domain.Campo) bool {
+func (c *CampoDao) ActualizarCampo(campo domain.Campo) (err error) {
 	data := []domain.Simple{}
 	for _, item := range c.data {
 		if item.Id() == campo.Id() {
@@ -81,15 +83,16 @@ func (c *CampoDao) ActualizarCampo(campo domain.Campo) bool {
 	}
 
 	c.data = data
-	return true
+
+	return err
 }
 
-func (c *CampoDao) AgregarSuncampo(campo domain.Campo, subcampo domain.Campo) bool {
-	return false
+func (c *CampoDao) AgregarSuncampo(campo domain.Campo, subcampo domain.Campo) (err error) {
+	return err
 }
 
-func (c *CampoDao) QuitarSuncampo(campo domain.Campo, subcampo domain.Campo) bool {
-	return false
+func (c *CampoDao) QuitarSuncampo(campo domain.Campo, subcampo domain.Campo) (err error) {
+	return err
 }
 
 func (c *CampoDao) SubCampos(campo domain.Campo) (subcampos []domain.Campo) {
@@ -123,5 +126,11 @@ func (c *CampoDao) BuscarCampo(criteria string) (campos []domain.Campo) {
 }
 
 func (c *CampoDao) BuscarCampoPorNombre(nombre string) (campo domain.Campo) {
+	for _, item := range c.data {
+		if item.Nombre() != nombre {
+			continue
+		}
+		return &item
+	}
 	return &domain.Simple{}
 }
