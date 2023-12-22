@@ -2,7 +2,7 @@ package controller
 
 import (
 	"garlito/src/infraestructure/util"
-	"garlito/src/usecase"
+	usecase "garlito/src/usecase/campos"
 	"garlito/src/view/dto"
 	formrequest "garlito/src/view/form-request"
 	"net/http"
