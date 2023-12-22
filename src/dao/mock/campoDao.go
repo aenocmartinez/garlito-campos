@@ -83,15 +83,6 @@ func (c *CampoDao) ActualizarCampo(campo domain.Campo) (err error) {
 	return err
 }
 
-func (c *CampoDao) GuardarSubcampo(campo domain.Campo) (err error) {
-
-	return err
-}
-
-func (c *CampoDao) QuitarSuncampo(campo domain.Campo, subcampo domain.Campo) (err error) {
-	return err
-}
-
 func (c *CampoDao) SubCampos(campo domain.Campo) (subcampos []domain.Campo) {
 	return subcampos
 }

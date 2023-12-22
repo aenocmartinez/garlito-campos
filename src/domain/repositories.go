@@ -6,11 +6,18 @@ type CampoRepository interface {
 	CrearCampo(campo Campo) (err error)
 	EliminarCampo(id int64) (err error)
 	ActualizarCampo(campo Campo) (err error)
-	GuardarSubcampo(campo Campo) (err error)
-	QuitarSuncampo(campo Campo, subcampo Campo) (err error)
 	SubCampos(campo Campo) []Campo
 	ListarCampos() []dto.CampoDto
 	BuscarCampoPorId(id int64) Campo
 	BuscarCampo(criteria string) []Campo
 	BuscarCampoPorNombre(nombre string) Campo
+}
+
+type ColeccionRepository interface {
+	CrearColeccion(coleccion Coleccion) (err error)
+	EliminarColeccion(id int64) (err error)
+	ActualizarColeccion(coleccion Coleccion) (err error)
+	ListarColeccion() (colecciones []dto.ColeccionDto)
+	BuscarColeccionPorNombre(nombre string) (coleccion Coleccion)
+	BuscarColeccionPorId(id int64) (coleccion Coleccion)
 }

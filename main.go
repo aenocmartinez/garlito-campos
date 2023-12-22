@@ -19,5 +19,11 @@ func main() {
 	r.PUT("/campos/agregar-subcampo", controller.AgregarSubcampo)
 	r.PUT("/campos/quitar-subcampo", controller.QuitarSubcampo)
 
+	r.GET("/colecciones", controller.ListarColecciones)
+	r.GET("/colecciones/:id", controller.BuscarColeccionPorId)
+	r.POST("/colecciones", controller.CrearColeccion)
+	r.PUT("/colecciones", controller.ActualizarColeccion)
+	r.DELETE("/colecciones/:id", controller.EliminarColeccion)
+
 	r.Run(":2300")
 }

@@ -26,7 +26,11 @@ func CrearCampo(c *gin.Context) {
 		EsCompuesto: req.EsCompuesto,
 	})
 
-	c.JSON(http.StatusCreated, resp)
+	code, _ := strconv.Atoi(resp.Code)
+	if resp.Code != "200" {
+		c.JSON(code, resp)
+		return
+	}
 }
 
 func ActualizarCampo(c *gin.Context) {
@@ -44,7 +48,11 @@ func ActualizarCampo(c *gin.Context) {
 		Descripcion: req.Descripcion,
 	})
 
-	c.JSON(http.StatusOK, resp)
+	code, _ := strconv.Atoi(resp.Code)
+	if resp.Code != "200" {
+		c.JSON(code, resp)
+		return
+	}
 }
 
 func EliminarCampo(c *gin.Context) {
@@ -58,7 +66,11 @@ func EliminarCampo(c *gin.Context) {
 
 	eliminarCampo := usecase.EliminarCampoUseCase{}
 	resp := eliminarCampo.Execute(id)
-	c.JSON(http.StatusOK, resp)
+	code, _ := strconv.Atoi(resp.Code)
+	if resp.Code != "200" {
+		c.JSON(code, resp)
+		return
+	}
 }
 
 func ListarCampos(c *gin.Context) {
