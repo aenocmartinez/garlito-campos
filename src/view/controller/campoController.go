@@ -105,5 +105,24 @@ func AgregarSubcampo(c *gin.Context) {
 	}
 
 	c.JSON(code, resp)
+}
 
+func QuitarSubcampo(c *gin.Context) {
+	var req formrequest.AgregarSubcampoFormRequest
+	err := c.ShouldBind(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	quitarSubcampo := usecase.QuitarSubcampoUseCase{}
+	resp := quitarSubcampo.Execute(req.CampoId, req.SubcampoId)
+
+	code, _ := strconv.Atoi(resp.Code)
+	if resp.Code != "200" {
+		c.JSON(code, resp)
+		return
+	}
+
+	c.JSON(code, resp)
 }

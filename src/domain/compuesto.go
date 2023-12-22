@@ -53,8 +53,18 @@ func (c *Compuesto) AgregarSubcampo(subcampo Campo) error {
 	return c.repository.ActualizarCampo(c)
 }
 
-func (c *Compuesto) QuitarSubcampo(campo Campo) bool {
-	return false
+func (c *Compuesto) QuitarSubcampo(subcampo Campo) error {
+	var subcampos []Campo = []Campo{}
+	for _, item := range c.subcampos {
+		if item.Id() == subcampo.Id() {
+			continue
+		}
+		subcampos = append(subcampos, item)
+	}
+
+	c.subcampos = subcampos
+
+	return c.repository.ActualizarCampo(c)
 }
 
 func (c *Compuesto) Subcampos() []Campo {

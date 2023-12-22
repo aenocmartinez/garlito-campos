@@ -17,6 +17,7 @@ func main() {
 	r.PUT("/campos", controller.ActualizarCampo)
 	r.DELETE("/campos/:id", controller.EliminarCampo)
 	r.PUT("/campos/agregar-subcampo", controller.AgregarSubcampo)
+	r.PUT("/campos/quitar-subcampo", controller.QuitarSubcampo)
 
 	r.Run(":2300")
 }
