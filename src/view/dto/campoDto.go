@@ -5,4 +5,5 @@ type CampoDto struct {
 	Nombre      string     `json:"nombre"`
 	Descripcion string     `json:"descripcion"`
 	Subcampos   []CampoDto `json:"subcampos,omitempty"`
+	EsCompuesto bool       `json:"es_compuesto"`
 }

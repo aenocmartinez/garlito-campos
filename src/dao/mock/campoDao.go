@@ -12,12 +12,12 @@ var (
 )
 
 type CampoDao struct {
-	data []domain.Simple
+	campos []domain.Campo
 }
 
 func NewCampoDao() *CampoDao {
 	return &CampoDao{
-		data: loaderData(),
+		campos: loaderData(),
 	}
 }
 
@@ -31,63 +31,60 @@ func generateRandomDescription() string {
 	return description
 }
 
-func loaderData() (data []domain.Simple) {
+func loaderData() (data []domain.Campo) {
 	for i := 1; i <= len(names); i++ {
-		campo := domain.NewSimple()
 
+		campo := domain.NewSimple()
 		campo.SetId(int64(i))
 		// campo.SetNombre(generateRandomName())
 		campo.SetNombre(names[i-1])
 		campo.SetDescripcion(generateRandomDescription())
 
-		data = append(data, *campo)
+		data = append(data, campo)
 	}
 	return data
 }
 
 func (c *CampoDao) CrearCampo(campo domain.Campo) (err error) {
-	id := len(c.data) + 1
+	id := len(c.campos) + 1
+	campo.SetId(int64(id))
 
-	simple, _ := campo.(*domain.Simple)
-	simple.SetId(int64(id))
-	simple.SetNombre(campo.Nombre())
-	simple.SetDescripcion(campo.Descripcion())
-
-	c.data = append(c.data, *simple)
+	c.campos = append(c.campos, campo)
 
 	return err
 }
 
 func (c *CampoDao) EliminarCampo(id int64) (err error) {
-	data := []domain.Simple{}
-	for _, item := range c.data {
-		if item.Id() == id {
+	var campos []domain.Campo = []domain.Campo{}
+	for _, campo := range c.campos {
+		if campo.Id() == id {
 			continue
 		}
-		data = append(data, item)
+		campos = append(campos, campo)
 	}
 
-	c.data = data
+	c.campos = campos
 
 	return err
 }
 
 func (c *CampoDao) ActualizarCampo(campo domain.Campo) (err error) {
-	data := []domain.Simple{}
-	for _, item := range c.data {
+	var campos []domain.Campo = []domain.Campo{}
+	for _, item := range c.campos {
 		if item.Id() == campo.Id() {
 			item.SetNombre(campo.Nombre())
 			item.SetDescripcion(campo.Descripcion())
 		}
-		data = append(data, item)
+		campos = append(campos, item)
 	}
 
-	c.data = data
+	c.campos = campos
 
 	return err
 }
 
-func (c *CampoDao) AgregarSuncampo(campo domain.Campo, subcampo domain.Campo) (err error) {
+func (c *CampoDao) GuardarSubcampo(campo domain.Campo) (err error) {
+
 	return err
 }
 
@@ -101,22 +98,23 @@ func (c *CampoDao) SubCampos(campo domain.Campo) (subcampos []domain.Campo) {
 
 func (c *CampoDao) ListarCampos() (campos []dto.CampoDto) {
 	campos = []dto.CampoDto{}
-	for _, item := range c.data {
+	for _, item := range c.campos {
 		campos = append(campos, dto.CampoDto{
 			Id:          item.Id(),
 			Nombre:      item.Nombre(),
 			Descripcion: item.Descripcion(),
+			EsCompuesto: item.EsCompuesto(),
 		})
 	}
 	return campos
 }
 
 func (c *CampoDao) BuscarCampoPorId(id int64) (campo domain.Campo) {
-	for _, item := range c.data {
-		if item.Id() != id {
+	for _, campo := range c.campos {
+		if campo.Id() != id {
 			continue
 		}
-		return &item
+		return campo
 	}
 	return &domain.Simple{}
 }
@@ -126,11 +124,11 @@ func (c *CampoDao) BuscarCampo(criteria string) (campos []domain.Campo) {
 }
 
 func (c *CampoDao) BuscarCampoPorNombre(nombre string) (campo domain.Campo) {
-	for _, item := range c.data {
-		if item.Nombre() != nombre {
+	for _, campo := range c.campos {
+		if campo.Nombre() != nombre {
 			continue
 		}
-		return &item
+		return campo
 	}
 	return &domain.Simple{}
 }

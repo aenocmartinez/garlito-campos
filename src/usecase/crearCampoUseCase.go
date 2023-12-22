@@ -1,23 +1,32 @@
 package usecase
 
-import "garlito/src/view/dto"
+import (
+	"garlito/src/domain"
+	"garlito/src/view/dto"
+)
 
 type CrearCampoUseCase struct{}
 
 func (uc *CrearCampoUseCase) Execute(campoDto dto.CampoDto) (resp dto.ResponseHttp) {
 
-	campo := campoRepository.BuscarCampoPorNombre(campoDto.Nombre)
+	var nuevoCampo domain.Campo
+	var campo domain.Campo = campoRepository.BuscarCampoPorNombre(campoDto.Nombre)
 	if campo.Existe() {
 		resp.Code = "200"
 		resp.Message = "the resource already exists"
 		return resp
 	}
 
-	campo.SetRepository(campoRepository)
-	campo.SetNombre(campoDto.Nombre)
-	campo.SetDescripcion(campoDto.Descripcion)
+	nuevoCampo = domain.NewSimple()
+	if campoDto.EsCompuesto {
+		nuevoCampo = domain.NewCompuesto()
+	}
 
-	err := campo.Crear()
+	nuevoCampo.SetRepository(campoRepository)
+	nuevoCampo.SetNombre(campoDto.Nombre)
+	nuevoCampo.SetDescripcion(campoDto.Descripcion)
+
+	err := nuevoCampo.Crear()
 	if err != nil {
 		resp.Code = "500"
 		resp.Message = "error internal"

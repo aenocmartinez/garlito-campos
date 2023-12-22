@@ -27,6 +27,7 @@ func (uc *BuscarCampoPorIdUseCase) Execute(id int64) (resp dto.ResponseHttp) {
 		Nombre:      campo.Nombre(),
 		Descripcion: campo.Descripcion(),
 		Subcampos:   subcampos,
+		EsCompuesto: campo.EsCompuesto(),
 	}
 
 	return resp

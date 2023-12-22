@@ -23,6 +23,7 @@ func CrearCampo(c *gin.Context) {
 	resp := crearCampo.Execute(dto.CampoDto{
 		Nombre:      req.Nombre,
 		Descripcion: req.Descripcion,
+		EsCompuesto: req.EsCompuesto,
 	})
 
 	c.JSON(http.StatusCreated, resp)
@@ -84,4 +85,25 @@ func BuscarCampoPorId(c *gin.Context) {
 	}
 
 	c.JSON(code, resp)
+}
+
+func AgregarSubcampo(c *gin.Context) {
+	var req formrequest.AgregarSubcampoFormRequest
+	err := c.ShouldBind(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	agregarSubcampo := usecase.AgregarSubcampoUseCase{}
+	resp := agregarSubcampo.Execute(req.CampoId, req.SubcampoId)
+
+	code, _ := strconv.Atoi(resp.Code)
+	if resp.Code != "200" {
+		c.JSON(code, resp)
+		return
+	}
+
+	c.JSON(code, resp)
+
 }

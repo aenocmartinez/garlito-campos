@@ -48,8 +48,9 @@ func (c *Compuesto) EsCompuesto() bool {
 	return true
 }
 
-func (c *Compuesto) AgregarSubcampo(campo Campo) bool {
-	return false
+func (c *Compuesto) AgregarSubcampo(subcampo Campo) error {
+	c.subcampos = append(c.subcampos, subcampo)
+	return c.repository.ActualizarCampo(c)
 }
 
 func (c *Compuesto) QuitarSubcampo(campo Campo) bool {
