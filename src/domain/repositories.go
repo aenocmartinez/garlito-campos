@@ -21,3 +21,12 @@ type ColeccionRepository interface {
 	BuscarColeccionPorNombre(nombre string) (coleccion Coleccion)
 	BuscarColeccionPorId(id int64) (coleccion Coleccion)
 }
+
+type ListaRepository interface {
+	CrearLista(lista Lista) (err error)
+	ActualizarLista(lista Lista) (err error)
+	EliminarLista(id int64) (err error)
+	ListarLista() (lista []dto.ListaDto)
+	BuscarListaPorId(id int64) (lista Lista)
+	BuscarListaPorNombre(nombre string) (lista Lista)
+}

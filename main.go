@@ -27,5 +27,11 @@ func main() {
 	r.PUT("/colecciones/agregar-campo", controller.AgregarCampoColeccion)
 	r.PUT("/colecciones/quitar-campo", controller.QuitarCampoColeccion)
 
+	r.GET("/listas", controller.ListarListas)
+	r.GET("/listas/:id", controller.BuscarListaPorId)
+	r.POST("/listas", controller.CrearLista)
+	r.PUT("/listas", controller.ActualizarLista)
+	r.DELETE("/listas/:id", controller.EliminarLista)
+
 	r.Run(":2300")
 }
