@@ -6,3 +6,4 @@ import (
 )
 
 var coleccionRepository domain.ColeccionRepository = mock.NewColeccionDao()
+var campoRepository domain.CampoRepository = mock.NewCampoDao()

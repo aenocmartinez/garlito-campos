@@ -55,6 +55,7 @@ func (c *ColeccionDao) ActualizarColeccion(coleccion domain.Coleccion) (err erro
 	for _, item := range c.data {
 		if item.Id() == coleccion.Id() {
 			item.SetNombre(coleccion.Nombre())
+			item.SetCampos(coleccion.Campos())
 		}
 		colecciones = append(colecciones, item)
 	}

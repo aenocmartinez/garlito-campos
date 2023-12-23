@@ -24,6 +24,8 @@ func main() {
 	r.POST("/colecciones", controller.CrearColeccion)
 	r.PUT("/colecciones", controller.ActualizarColeccion)
 	r.DELETE("/colecciones/:id", controller.EliminarColeccion)
+	r.PUT("/colecciones/agregar-campo", controller.AgregarCampoColeccion)
+	r.PUT("/colecciones/quitar-campo", controller.QuitarCampoColeccion)
 
 	r.Run(":2300")
 }

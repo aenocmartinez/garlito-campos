@@ -79,3 +79,40 @@ func EliminarColeccion(c *gin.Context) {
 	code, _ := strconv.Atoi(resp.Code)
 	c.JSON(code, resp)
 }
+
+func AgregarCampoColeccion(c *gin.Context) {
+	var req formrequest.AgregarCampoColeccionFormRequest
+	err := c.ShouldBind(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	agregarCampoColeccion := usecase.AgregarCampoColeccionUseCase{}
+	resp := agregarCampoColeccion.Execute(dto.CampoColeccionDto{
+		ColeccionId: req.ColeccionId,
+		CampoId:     req.CampoId,
+		Obligatorio: req.Obligatorio,
+		Editable:    req.Editable,
+		Unico:       req.Unico,
+	})
+
+	code, _ := strconv.Atoi(resp.Code)
+	c.JSON(code, resp)
+}
+
+func QuitarCampoColeccion(c *gin.Context) {
+	var req formrequest.AgregarCampoColeccionFormRequest
+	err := c.ShouldBind(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	quitarCampoColeccion := usecase.QuitarCampoColeccionUseCase{}
+	resp := quitarCampoColeccion.Execute(dto.CampoColeccionDto{
+		ColeccionId: req.ColeccionId,
+		CampoId:     req.CampoId,
+	})
+
+	code, _ := strconv.Atoi(resp.Code)
+	c.JSON(code, resp)
+}

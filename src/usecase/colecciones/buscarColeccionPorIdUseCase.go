@@ -12,11 +12,24 @@ func (uc *BuscarColeccionPorIdUseCase) Execute(id int64) (resp dto.ResponseHttp)
 		return resp
 	}
 
+	campos := []dto.CampoColeccionDto{}
+	for _, campoColeccion := range coleccion.Campos() {
+		campos = append(campos, dto.CampoColeccionDto{
+			ColeccionId: campoColeccion.ColeccionId(),
+			CampoId:     campoColeccion.CampoId(),
+			Campo:       campoColeccion.Nombre(),
+			Obligatorio: campoColeccion.Obligatorio(),
+			Editable:    campoColeccion.Editable(),
+			Unico:       campoColeccion.Unico(),
+		})
+	}
+
 	resp.Code = "200"
 	resp.Message = "success"
 	resp.Data = dto.ColeccionDto{
 		Id:     coleccion.Id(),
 		Nombre: coleccion.Nombre(),
+		Campos: campos,
 	}
 	return resp
 }

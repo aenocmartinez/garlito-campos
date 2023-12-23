@@ -3,11 +3,17 @@ package domain
 type Coleccion struct {
 	id         int64
 	nombre     string
+	campos     []CampoColeccion
 	repository ColeccionRepository
 }
 
+type Propiedad struct {
+}
+
 func NewColeccion() *Coleccion {
-	return &Coleccion{}
+	return &Coleccion{
+		campos: []CampoColeccion{},
+	}
 }
 
 func (c *Coleccion) SetRepository(repository ColeccionRepository) {
@@ -24,6 +30,10 @@ func (c *Coleccion) Id() int64 {
 
 func (c *Coleccion) SetNombre(nombre string) {
 	c.nombre = nombre
+}
+
+func (c *Coleccion) SetCampos(campos []CampoColeccion) {
+	c.campos = campos
 }
 
 func (c *Coleccion) Nombre() string {
@@ -44,4 +54,27 @@ func (c *Coleccion) Actualizar() error {
 
 func (c *Coleccion) Existe() bool {
 	return c.id > 0
+}
+
+func (c *Coleccion) AgregarCampo(campo Campo, propiedades map[string]bool) error {
+	c.campos = append(c.campos, *NewCampoColeccion(*c, campo, propiedades))
+	return c.repository.ActualizarColeccion(*c)
+}
+
+func (c *Coleccion) QuitarCampo(campo Campo) error {
+	var campos []CampoColeccion = []CampoColeccion{}
+	for _, campoColeccion := range c.campos {
+		if campoColeccion.CampoId() == campo.Id() {
+			continue
+		}
+		campos = append(campos, campoColeccion)
+	}
+
+	c.campos = campos
+
+	return c.repository.ActualizarColeccion(*c)
+}
+
+func (c *Coleccion) Campos() []CampoColeccion {
+	return c.campos
 }
